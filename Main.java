@@ -6,9 +6,9 @@ import java.awt.event.KeyListener;
 
 public class Main {
     public static void main(String[] args) {
-        drawkodi(1);
+        drawkodi(0.001);
     }
-    public static double[] y(String s, int i){
+    public static double[] y(String s, double i){
         String output;
         com.github.ayaanqui.expressionresolver.Resolver res = new Resolver();
         //System.out.println("x: "+i);
@@ -21,9 +21,14 @@ public class Main {
         res.solveExpression();
         //System.out.println("y: " + (int)res.getLastResult());
         double[] values = new double[2];
+        //System.out.println(res.getLastResult());
+        Double result = res.getLastResult();
 
-        values[0] = i;
-        values[1] = res.getLastResult() * (-1);
+
+        int increase = 10000;
+
+        values[0] = i * increase;
+        values[1] = (result * (-1)) * increase;
         return values;
 
 
@@ -44,42 +49,43 @@ public class Main {
                     super.paintComponent(g);
                     Graphics2D g2d = (Graphics2D) g;
                     super.paintComponent(g);
+                    g2d.setColor(Color.white);
+                    g2d.drawLine(0,400,800,400);
+                    g2d.drawLine(400,800,400,0);
                     int w = f.getWidth();
                     int h = f.getHeight();
-
                     g2d.translate(w / 2, h / 2);
                     g2d.scale(scale, scale);
                     g2d.translate(-w / 2, -h / 2);
-                    for (int i = -540; i <= 540; i++) {
-
+                    for (double i = -5400; i <= 5400; i = i + 0.01) {
+                    try {
                         double[] values = y(s, i);
-                        double[] valuess = y(s, (int) (i + 1));
+                        double[] valuess = y(s, (i + 0.1));
                         g.setColor(Color.red);
                         //g2d.drawOval((int) values[0]+ 540,(int) values[1] + 540,1,1);
-
-                        g2d.drawLine((int) values[0] + 540, (int) values[1] + 540, (int) valuess[0] + 540, (int) valuess[1] + 540);
-
-                        g.setColor(Color.white);
-                        g2d.drawString("0", 530, 550);
-                        g2d.drawString("100", 450 + 140, 409 + 140);
-                        g2d.drawString("200", 550 + 140, 409 + 140);
-                        g2d.drawString("300", 650 + 140, 409 + 140);
-                        g2d.drawString("400", 750 + 140, 409 + 140);
-                        g2d.drawString("500", 850 + 140, 409 + 140);
-
-                        g2d.drawString("100", f.getWidth() / 2 - 20, 350 + 140);
-                        g2d.drawString("200", f.getWidth() / 2 - 20, 250 + 140);
-                        g2d.drawString("300", f.getWidth() / 2 - 20, 150 + 140);
-                        g2d.drawString("400", f.getWidth() / 2 - 20, 50 + 140);
-                        g2d.drawString("500", f.getWidth() / 2 - 20, 90);
+                                g2d.drawLine((int) values[0] + 400, (int) values[1] + 400, (int) valuess[0] + 400, (int) valuess[1] + 400);
+                    }
+                    catch (NullPointerException e){
+                        System.out.println();
+                    }
 
 
                     }
 
-
                     g.setColor(Color.white);
-                    g.drawLine(540, 1080, 540, 0);
-                    g.drawLine(1080, 540, 0, 540);
+                    //g2d.drawString("0", 530, 550);
+                    //g2d.drawString("100", 450 + 140, 409 + 140);
+                    //g2d.drawString("200", 550 + 140, 409 + 140);
+                    //g2d.drawString("300", 650 + 140, 409 + 140);
+                    //g2d.drawString("400", 750 + 140, 409 + 140);
+                    //g2d.drawString("500", 850 + 140, 409 + 140);
+
+                    //g2d.drawString("100", f.getWidth() / 2 - 20, 350 + 140);
+                    //g2d.drawString("200", f.getWidth() / 2 - 20, 250 + 140);
+                    //g2d.drawString("300", f.getWidth() / 2 - 20, 150 + 140);
+                    //g2d.drawString("400", f.getWidth() / 2 - 20, 50 + 140);
+                    //g2d.drawString("500", f.getWidth() / 2 - 20, 90);
+                    //g.setColor(Color.white);
                     setBackground(Color.black);
 
                     f.addKeyListener(new KeyListener() {
@@ -92,11 +98,11 @@ public class Main {
                         public void keyPressed(KeyEvent e) {
                             if (e.getKeyCode() == 82) {
                                 f.dispose();
-                                drawkodi(1);
+                                drawkodi(0.01);
                             }
                             if (e.getKeyCode() == 38) {
-                                f.dispose();
-                                drawkodi(2);
+                                //f.dispose();
+                                drawkodi(0.05);
                             }
                         }
 
@@ -110,7 +116,7 @@ public class Main {
 
             };
 
-            f.setSize(1080, 1080);
+            f.setSize(800, 800);
             f.add(p);
             f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             f.setLocationRelativeTo(null);
