@@ -1,4 +1,5 @@
 import com.github.ayaanqui.expressionresolver.Resolver;
+// DONWLOAD QET LIBRARI NE GITHUB EDHE E QITNI ME NI FOLDER NQOFTSE DONI ME BA COMPILE FLM YJZI
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
